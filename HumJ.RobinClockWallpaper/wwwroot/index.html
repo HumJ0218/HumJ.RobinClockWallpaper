@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>知更鸟时钟桌面 by HumJ</title>
+</head>
+<body>
+    <div class="background">
+        <div id="number1" class="number"></div>
+        <div id="number2" class="number"></div>
+        <div id="number3" class="number"></div>
+        <div id="number4" class="number"></div>
+        <div id="number5" class="number"></div>
+        <div id="number6" class="number"></div>
+    </div>
+    <style>
+        * { position: absolute; margin: 0; padding: 0; overflow: hidden; }
+        html, body { width: 100%; height: 100%; }
+        .background { left: 0px; top: 0px; width: 1920px; height: 1080px; background-image: url('background.png'); }
+        .number { width: 37px; height: 52px; background-image: url('number.png'); top: 636px; background-position-y: 0px; }
+        #number1 { left: 889px; }
+        #number2 { left: 918px; }
+        #number3 { left: 957px; }
+        #number4 { left: 986px; }
+        #number5 { left: 1025px; }
+        #number6 { left: 1054px; }
+    </style>
+    <script>
+        (() => {
+            // 缩放以始终居中铺满整个窗口
+            function resize() {
+                var ratio = 1920 / 1080;
+                var windowRatio = window.innerWidth / window.innerHeight;
+                if (windowRatio > ratio) {
+                    // 窗口宽度较大
+                    var zoom = window.innerWidth / 1920;
+                    var top = (window.innerHeight - 1080 * zoom) / 2;
+                    document.querySelector('.background').style.zoom = zoom;
+                    document.querySelector('.background').style.top = top + 'px';
+
+                    console.log('w', zoom, top);
+                } else {
+                    // 窗口高度较大
+                    var zoom = window.innerHeight / 1080;
+                    var left = (window.innerWidth - 1920 * zoom) / 2;
+                    document.querySelector('.background').style.zoom = zoom;
+                    document.querySelector('.background').style.left = left + 'px';
+
+                    console.log('h', zoom, left);
+                }
+            }
+
+            function tick() {
+                var now = new Date();
+                var h = now.getHours();
+                var m = now.getMinutes();
+                var s = now.getSeconds();
+
+                var h1 = Math.floor(h / 10);
+                var h2 = h % 10;
+                var m1 = Math.floor(m / 10);
+                var m2 = m % 10;
+                var s1 = Math.floor(s / 10);
+                var s2 = s % 10;
+
+                document.getElementById('number1').style.backgroundPositionX = -h1 * 37 + 'px';
+                document.getElementById('number2').style.backgroundPositionX = -h2 * 37 + 'px';
+                document.getElementById('number3').style.backgroundPositionX = -m1 * 37 + 'px';
+                document.getElementById('number4').style.backgroundPositionX = -m2 * 37 + 'px';
+                document.getElementById('number5').style.backgroundPositionX = -s1 * 37 + 'px';
+                document.getElementById('number6').style.backgroundPositionX = -s2 * 37 + 'px';
+
+                var ms = new Date().getMilliseconds();
+                setTimeout(tick, 1000 - ms);
+            }
+
+            window.addEventListener('resize', resize);
+
+            resize();
+            tick();
+        })();
+    </script>
+</body>
+</html>
