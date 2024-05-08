@@ -16,37 +16,41 @@
     <style>
         * { position: absolute; margin: 0; padding: 0; overflow: hidden; }
         html, body { width: 100%; height: 100%; }
-        .background { left: 0px; top: 0px; width: 1920px; height: 1080px; background-image: url('background.png'); }
-        .number { width: 37px; height: 52px; background-image: url('number.png'); top: 636px; background-position-y: 0px; }
-        #number1 { left: 889px; }
-        #number2 { left: 918px; }
-        #number3 { left: 957px; }
-        #number4 { left: 986px; }
-        #number5 { left: 1025px; }
-        #number6 { left: 1054px; }
+        .background { left: 0px; top: 0px; width: 1920px; height: 1080px; }
+
+            .background.day { background-image: url('background2.png'); }
+                .background.day .number { width: 36px; height: 50px; background-image: url('number2.png'); background-position-y: 0px; }
+                .background.day #number1 { left: 792px; top: 705px; }
+                .background.day #number2 { left: 820px; top: 705px; }
+                .background.day #number3 { left: 858px; top: 704px; }
+                .background.day #number4 { left: 886px; top: 704px; }
+                .background.day #number5 { left: 924px; top: 703px; }
+                .background.day #number6 { left: 952px; top: 703px; }
+
+            .background.night { background-image: url('background1.png'); }
+                .background.night .number { width: 37px; height: 52px; background-image: url('number1.png'); background-position-y: 0px; }
+                .background.night #number1 { left: 889px; top: 636px; }
+                .background.night #number2 { left: 918px; top: 636px; }
+                .background.night #number3 { left: 957px; top: 636px; }
+                .background.night #number4 { left: 986px; top: 636px; }
+                .background.night #number5 { left: 1025px; top: 636px; }
+                .background.night #number6 { left: 1054px; top: 636px; }
     </style>
     <script>
         (() => {
-            // 缩放以始终居中铺满整个窗口
             function resize() {
                 var ratio = 1920 / 1080;
                 var windowRatio = window.innerWidth / window.innerHeight;
                 if (windowRatio > ratio) {
-                    // 窗口宽度较大
                     var zoom = window.innerWidth / 1920;
                     var top = (window.innerHeight - 1080 * zoom) / 2;
                     document.querySelector('.background').style.zoom = zoom;
                     document.querySelector('.background').style.top = top + 'px';
-
-                    console.log('w', zoom, top);
                 } else {
-                    // 窗口高度较大
                     var zoom = window.innerHeight / 1080;
                     var left = (window.innerWidth - 1920 * zoom) / 2;
                     document.querySelector('.background').style.zoom = zoom;
                     document.querySelector('.background').style.left = left + 'px';
-
-                    console.log('h', zoom, left);
                 }
             }
 
@@ -63,12 +67,23 @@
                 var s1 = Math.floor(s / 10);
                 var s2 = s % 10;
 
-                document.getElementById('number1').style.backgroundPositionX = -h1 * 37 + 'px';
-                document.getElementById('number2').style.backgroundPositionX = -h2 * 37 + 'px';
-                document.getElementById('number3').style.backgroundPositionX = -m1 * 37 + 'px';
-                document.getElementById('number4').style.backgroundPositionX = -m2 * 37 + 'px';
-                document.getElementById('number5').style.backgroundPositionX = -s1 * 37 + 'px';
-                document.getElementById('number6').style.backgroundPositionX = -s2 * 37 + 'px';
+                if (now.getHours() < 6 || now.getHours() >= 18) {
+                    document.querySelector('.background').className = 'background night';
+                    document.getElementById('number1').style.backgroundPositionX = -h1 * 37 + 'px';
+                    document.getElementById('number2').style.backgroundPositionX = -h2 * 37 + 'px';
+                    document.getElementById('number3').style.backgroundPositionX = -m1 * 37 + 'px';
+                    document.getElementById('number4').style.backgroundPositionX = -m2 * 37 + 'px';
+                    document.getElementById('number5').style.backgroundPositionX = -s1 * 37 + 'px';
+                    document.getElementById('number6').style.backgroundPositionX = -s2 * 37 + 'px';
+                } else {
+                    document.querySelector('.background').className = 'background day';
+                    document.getElementById('number1').style.backgroundPositionX = -h1 * 36 + 'px';
+                    document.getElementById('number2').style.backgroundPositionX = -h2 * 36 + 'px';
+                    document.getElementById('number3').style.backgroundPositionX = -m1 * 36 + 'px';
+                    document.getElementById('number4').style.backgroundPositionX = -m2 * 36 + 'px';
+                    document.getElementById('number5').style.backgroundPositionX = -s1 * 36 + 'px';
+                    document.getElementById('number6').style.backgroundPositionX = -s2 * 36 + 'px';
+                }
 
                 var ms = new Date().getMilliseconds();
                 setTimeout(tick, 1000 - ms);
