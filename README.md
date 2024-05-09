@@ -6,7 +6,7 @@
 Install [Lively Wallpaper](https://www.rocksdanister.com/lively/) and theoretically you can set it as your desktop wallpaper directly by using the following address.
 
 ```
-https://htmlpreview.github.io/?https://github.com/HumJ0218/HumJ.RobinClockWallpaper/blob/main/HumJ.RobinClockWallpaper/wwwroot/index.html
+https://oss.humj.ink/robin
 ```
 
 或者直接下载 [这个文件](Robin.zip) 后用 Lively Wallpaper 打开，就可以直接设置为桌面了。
